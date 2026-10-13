@@ -47,6 +47,11 @@ function Navbar() {
                 Nosotros
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/blog">
+                Blog
+              </NavLink>
+            </li>
 
             <li className="nav-item">
               <NavLink className="nav-link" to="/carrito">

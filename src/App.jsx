@@ -10,6 +10,8 @@ import IniciarSesion from './paginas/IniciarSesion';
 import CrearUsuario from './paginas/CrearUsuario';
 import Contacto from './paginas/Contacto';
 import Nosotros from './paginas/Nosotros';
+import Blog from './paginas/Blog';
+import DetalleArticulo from './paginas/DetalleArticulo';
 import { productos } from './data/productos'
 
 function App() {
@@ -84,7 +86,12 @@ function App() {
           <Route 
             path="/nosotros" element={<Nosotros />} 
           />
-          
+          <Route 
+            path="/blog" element={<Blog />} 
+          />
+          <Route 
+            path="/blog/:id" element={<DetalleArticulo />} 
+          />
           <Route
             path="/carrito"
             element={
