@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { existeCorreo, existeRun, guardarUsuario } from '../utilidades/usuarios';
 import regiones from '../data/regiones';
 
 const REGEX_RUN = /^[0-9]{7,8}[0-9kK]$/;
@@ -61,6 +62,7 @@ function CrearUsuario() {
     comuna: '',
   });
   const [errores, setErrores] = useState({});
+  const navigate = useNavigate();
 
   const manejarCambio = (evento) => {
     const { name, value } = evento.target;
@@ -77,10 +79,20 @@ function CrearUsuario() {
   const manejarEnvio = (evento) => {
     evento.preventDefault();
     const nuevosErrores = validar(datos);
+
+    if (!nuevosErrores.run && existeRun(datos.run)) {
+      nuevosErrores.run = 'Ya existe un usuario con este RUN.';
+    }
+
+    if (!nuevosErrores.correo && existeCorreo(datos.correo)) {
+      nuevosErrores.correo = 'Ya existe un usuario con este correo.';
+    }
+
     setErrores(nuevosErrores);
 
     if (Object.keys(nuevosErrores).length === 0) {
-      console.log('Formulario válido');
+      guardarUsuario(datos);
+      navigate('/iniciar-sesion');
     }
   };
 

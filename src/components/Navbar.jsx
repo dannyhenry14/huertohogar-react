@@ -1,6 +1,16 @@
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { cerrarSesion, obtenerSesion } from '../utilidades/usuarios'
 
 function Navbar() {
+  useLocation()
+  const navigate = useNavigate()
+  const sesion = obtenerSesion()
+
+  const manejarCerrarSesion = () => {
+    cerrarSesion()
+    navigate('/iniciar-sesion')
+  }
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-success">
       <div className="container">
@@ -37,6 +47,29 @@ function Navbar() {
                 Carrito
               </NavLink>
             </li>
+
+            {sesion ? (
+              <>
+                <li className="nav-item d-flex align-items-center">
+                  <span className="navbar-text me-lg-3">Hola, {sesion.nombre}</span>
+                </li>
+                <li className="nav-item d-flex align-items-center">
+                  <button
+                    type="button"
+                    className="btn btn-outline-light btn-sm"
+                    onClick={manejarCerrarSesion}
+                  >
+                    Cerrar sesión
+                  </button>
+                </li>
+              </>
+            ) : (
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/iniciar-sesion">
+                  Iniciar sesión
+                </NavLink>
+              </li>
+            )}
           </ul>
         </div>
       </div>
