@@ -1,12 +1,35 @@
-function Carrito({ carrito, onEliminar, onCambiarCantidad }) {
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { obtenerSesion } from '../utilidades/usuarios'
+
+function Carrito({ carrito, onEliminar, onCambiarCantidad, onVaciar }) {
+  const [compraRealizada, setCompraRealizada] = useState(false)
+  const navigate = useNavigate()
+
   const total = carrito.reduce(
     (suma, item) => suma + item.precio * item.cantidad,
     0
   )
 
+  const manejarCompra = () => {
+    if (!obtenerSesion()) {
+      navigate('/iniciar-sesion')
+      return
+    }
+
+    onVaciar()
+    setCompraRealizada(true)
+  }
+
   return (
     <section id="carrito" className="container py-5">
       <h2 className="text-success mb-4">Mi carrito</h2>
+
+      {compraRealizada && (
+        <div className="alert alert-success">
+          ¡Compra realizada con éxito! Gracias por preferir HuertoHogar.
+        </div>
+      )}
 
       {carrito.length === 0 ? (
         <p>Tu carrito está vacío.</p>
@@ -54,6 +77,12 @@ function Carrito({ carrito, onEliminar, onCambiarCantidad }) {
       <p className="fs-4 fw-bold mt-3">
         Total: ${total.toLocaleString('es-CL')}
       </p>
+
+      {carrito.length > 0 && (
+        <button className="btn btn-success" onClick={manejarCompra}>
+          Comprar
+        </button>
+      )}
     </section>
   )
 }
