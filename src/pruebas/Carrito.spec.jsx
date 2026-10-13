@@ -1,10 +1,12 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Carrito from '../components/Carrito';
+import { cerrarSesion, guardarSesion } from '../utilidades/usuarios';
 
 describe('Carrito', () => {
   afterEach(() => {
     cleanup();
+    cerrarSesion();
   });
 
   it('muestra un mensaje cuando el carrito está vacío y esconde el botón Comprar', () => {
@@ -68,5 +70,29 @@ describe('Carrito', () => {
     fireEvent.click(screen.getByText('Eliminar'));
 
     expect(alEliminar).toHaveBeenCalledWith(7);
+  });
+  
+  it('Comprar con sesión iniciada vacía el carrito y muestra el aviso', () => {
+    guardarSesion({
+      nombre: 'Ana',
+      apellidos: 'Pérez',
+      correo: 'ana@duoc.cl',
+    });
+
+    const alVaciar = jasmine.createSpy('alVaciar');
+    const carritoDePrueba = [
+      { id: 1, nombre: 'Manzanas', precio: 1200, cantidad: 2 },
+    ];
+
+    render(
+      <MemoryRouter>
+        <Carrito carrito={carritoDePrueba} onVaciar={alVaciar} />
+      </MemoryRouter>
+    );
+
+    fireEvent.click(screen.getByText('Comprar'));
+
+    expect(alVaciar).toHaveBeenCalled();
+    expect(screen.getByText(/Compra realizada con éxito/)).toBeTruthy();
   });
 });
