@@ -25,6 +25,20 @@ function App() {
     }
   }
 
+  function eliminarDelCarrito(id) {
+    setCarrito(carrito.filter((item) => item.id !== id))
+  }
+
+  function cambiarCantidad(id, cambio) {
+    setCarrito(
+      carrito
+        .map((item) =>
+          item.id === id ? { ...item, cantidad: item.cantidad + cambio } : item
+        )
+        .filter((item) => item.cantidad > 0)
+    )
+  }
+
   return (
     <div className="d-flex flex-column min-vh-100">
       <Navbar />
@@ -34,7 +48,11 @@ function App() {
           <h2 className="text-success mb-4">Nuestros productos</h2>
           <ProductList productos={productos} onAgregar={agregarAlCarrito} />
         </section>
-        <Carrito carrito={carrito} />
+        <Carrito
+          carrito={carrito}
+          onEliminar={eliminarDelCarrito}
+          onCambiarCantidad={cambiarCantidad}
+        />
       </main>
       <Footer />
     </div>
