@@ -5,6 +5,7 @@ import Home from './components/Home'
 import Carrito from './components/Carrito'
 import Footer from './components/Footer'
 import Productos from './paginas/Productos'
+import DetalleProducto from './paginas/DetalleProducto'
 import { productos } from './data/productos'
 
 function App() {
@@ -59,6 +60,11 @@ function App() {
               <Productos productos={productos} onAgregar={agregarAlCarrito} />
             }
           />
+          <Route
+            path="/producto/:id"
+            element={<DetalleProducto onAgregar={agregarAlCarrito} />}
+          />
+
           <Route
             path="/carrito"
             element={

@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 function ProductCard({ producto, onAgregar }) {
   return (
     <div className="card h-100 shadow-sm">
@@ -12,12 +14,20 @@ function ProductCard({ producto, onAgregar }) {
         <p className="card-text">
           ${producto.precio.toLocaleString('es-CL')} / {producto.unidad}
         </p>
-        <button
-          className="btn btn-success mt-auto"
-          onClick={() => onAgregar(producto)}
-        >
-          Agregar al carrito
-        </button>
+        <div className="d-grid gap-2 mt-auto">
+          <Link
+            to={`/producto/${producto.id}`}
+            className="btn btn-outline-success"
+          >
+            Ver detalle
+          </Link>
+          <button
+            className="btn btn-success"
+            onClick={() => onAgregar(producto)}
+          >
+            Agregar al carrito
+          </button>
+        </div>
       </div>
     </div>
   )
