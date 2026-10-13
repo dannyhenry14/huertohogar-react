@@ -6,6 +6,8 @@ import Carrito from './components/Carrito'
 import Footer from './components/Footer'
 import Productos from './paginas/Productos'
 import DetalleProducto from './paginas/DetalleProducto'
+import IniciarSesion from './paginas/IniciarSesion';
+import CrearUsuario from './paginas/CrearUsuario';
 import { productos } from './data/productos'
 
 function App() {
@@ -65,6 +67,14 @@ function App() {
             element={<DetalleProducto onAgregar={agregarAlCarrito} />}
           />
 
+          <Route 
+            path="/iniciar-sesion" element={<IniciarSesion />} 
+          />
+
+          <Route 
+            path="/crear-usuario" element={<CrearUsuario />} 
+          />
+          
           <Route
             path="/carrito"
             element={
