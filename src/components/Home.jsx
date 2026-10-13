@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 function Home() {
   return (
     <>
@@ -10,9 +12,9 @@ function Home() {
             Del campo a tu mesa, sin intermediarios. HuertoHogar te trae lo mejor
             de la tierra chilena, fresco y con sabor real.
           </p>
-          <a href="#productos" className="btn btn-success btn-lg">
+          <Link to="/productos" className="btn btn-success btn-lg">
             Ver productos
-          </a>
+          </Link>
         </div>
       </section>
 

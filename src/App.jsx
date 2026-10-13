@@ -1,13 +1,21 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './components/Home'
-import ProductList from './components/ProductList'
 import Carrito from './components/Carrito'
 import Footer from './components/Footer'
+import Productos from './paginas/Productos'
 import { productos } from './data/productos'
 
 function App() {
-  const [carrito, setCarrito] = useState([])
+  const [carrito, setCarrito] = useState(() => {
+    const guardado = localStorage.getItem('carrito')
+    return guardado ? JSON.parse(guardado) : []
+  })
+
+  useEffect(() => {
+    localStorage.setItem('carrito', JSON.stringify(carrito))
+  }, [carrito])
 
   function agregarAlCarrito(producto) {
     const existe = carrito.find((item) => item.id === producto.id)
@@ -43,16 +51,25 @@ function App() {
     <div className="d-flex flex-column min-vh-100">
       <Navbar />
       <main className="flex-grow-1">
-        <Home />
-        <section id="productos" className="container py-5">
-          <h2 className="text-success mb-4">Nuestros productos</h2>
-          <ProductList productos={productos} onAgregar={agregarAlCarrito} />
-        </section>
-        <Carrito
-          carrito={carrito}
-          onEliminar={eliminarDelCarrito}
-          onCambiarCantidad={cambiarCantidad}
-        />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/productos"
+            element={
+              <Productos productos={productos} onAgregar={agregarAlCarrito} />
+            }
+          />
+          <Route
+            path="/carrito"
+            element={
+              <Carrito
+                carrito={carrito}
+                onEliminar={eliminarDelCarrito}
+                onCambiarCantidad={cambiarCantidad}
+              />
+            }
+          />
+        </Routes>
       </main>
       <Footer />
     </div>
