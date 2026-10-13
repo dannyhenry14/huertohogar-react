@@ -1,11 +1,11 @@
 import ProductCard from './ProductCard'
 
-function ProductList({ productos }) {
+function ProductList({ productos, onAgregar }) {
   return (
     <div className="row g-4">
       {productos.map((producto) => (
         <div className="col-12 col-sm-6 col-lg-4" key={producto.id}>
-          <ProductCard producto={producto} />
+          <ProductCard producto={producto} onAgregar={onAgregar} />
         </div>
       ))}
     </div>

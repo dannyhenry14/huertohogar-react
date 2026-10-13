@@ -1,15 +1,40 @@
+import { useState } from 'react'
 import Navbar from './components/Navbar'
+import Home from './components/Home'
 import ProductList from './components/ProductList'
+import Carrito from './components/Carrito'
 import Footer from './components/Footer'
 import { productos } from './data/productos'
 
 function App() {
+  const [carrito, setCarrito] = useState([])
+
+  function agregarAlCarrito(producto) {
+    const existe = carrito.find((item) => item.id === producto.id)
+
+    if (existe) {
+      setCarrito(
+        carrito.map((item) =>
+          item.id === producto.id
+            ? { ...item, cantidad: item.cantidad + 1 }
+            : item
+        )
+      )
+    } else {
+      setCarrito([...carrito, { ...producto, cantidad: 1 }])
+    }
+  }
+
   return (
     <div className="d-flex flex-column min-vh-100">
       <Navbar />
-      <main className="container py-5 flex-grow-1">
-        <h1 className="text-success mb-4">Nuestros productos</h1>
-        <ProductList productos={productos} />
+      <main className="flex-grow-1">
+        <Home />
+        <section id="productos" className="container py-5">
+          <h2 className="text-success mb-4">Nuestros productos</h2>
+          <ProductList productos={productos} onAgregar={agregarAlCarrito} />
+        </section>
+        <Carrito carrito={carrito} />
       </main>
       <Footer />
     </div>
