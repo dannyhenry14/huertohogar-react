@@ -52,4 +52,21 @@ describe('Carrito', () => {
 
     expect(alCambiarCantidad).toHaveBeenCalledWith(1, 1);
   });
+  
+  it('el botón Eliminar llama a onEliminar con el id del producto', () => {
+    const alEliminar = jasmine.createSpy('alEliminar');
+    const carritoDePrueba = [
+      { id: 7, nombre: 'Manzanas', precio: 1200, cantidad: 2 },
+    ];
+
+    render(
+      <MemoryRouter>
+        <Carrito carrito={carritoDePrueba} onEliminar={alEliminar} />
+      </MemoryRouter>
+    );
+
+    fireEvent.click(screen.getByText('Eliminar'));
+
+    expect(alEliminar).toHaveBeenCalledWith(7);
+  });
 });
