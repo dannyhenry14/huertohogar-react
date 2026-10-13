@@ -47,6 +47,11 @@ function Navbar() {
                 Carrito
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/contacto">
+                Contacto
+              </NavLink>
+            </li>
 
             {sesion ? (
               <>

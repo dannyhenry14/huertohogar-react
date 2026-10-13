@@ -8,6 +8,7 @@ import Productos from './paginas/Productos'
 import DetalleProducto from './paginas/DetalleProducto'
 import IniciarSesion from './paginas/IniciarSesion';
 import CrearUsuario from './paginas/CrearUsuario';
+import Contacto from './paginas/Contacto';
 import { productos } from './data/productos'
 
 function App() {
@@ -73,6 +74,10 @@ function App() {
 
           <Route 
             path="/crear-usuario" element={<CrearUsuario />} 
+          />
+
+          <Route 
+            path="/contacto" element={<Contacto />} 
           />
           
           <Route
